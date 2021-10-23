@@ -14,7 +14,7 @@ namespace WordSearcherML
             foreach (KeyValuePair<int, string> k in dictionaryWords)
                 if (k.Value == word)
                     count++;
-            return count;
+            return count++;
         }
 
         public static void PrintSavedDataStructure(Dictionary<int, string> dictionaryWords)
