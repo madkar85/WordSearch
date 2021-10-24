@@ -11,10 +11,12 @@ namespace WordSearch
     {
         static void Main(string[] args)
         {
-            string[] docs = { @"C:\Users\madel\OneDrive\Skrivbord\documents\Doc1.txt",
-                @"C:\Users\madel\OneDrive\Skrivbord\documents\Doc2.txt",
-                @"C:\Users\madel\OneDrive\Skrivbord\documents\Doc3.txt" };
+            //alla sökvägarna till dokumenten i en array, istället för att lägga in dom individuellt
+            string[] docs = { @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc1.txt",
+                @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc2.txt",
+                @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc3.txt" };
 
+            //läser in alla dokumenten och gör en lista av string arrays
             var allDocs = new List<string[]>();
 
             for (int i = 0; i <= docs.Length - 1; i++)
@@ -25,6 +27,7 @@ namespace WordSearch
             Menu(allDocs);
         }
 
+        //Läser in dokumenten och splittar alla string efter specialtecken samt tar bort whitespace
         public static string[] ReadDocument(string docName)
         {
             var file = File.ReadAllText(docName);
@@ -32,6 +35,7 @@ namespace WordSearch
             return Regex.Split(file, @"[^\w]+").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
         }
 
+        //Menyn som ger användaren valen den kan göra med dokumenten
         public static void Menu(List<string[]> allDocs)
         {
             bool keepgoing = true;
@@ -76,6 +80,7 @@ namespace WordSearch
             }
         }
 
+        //Exempel på hur vi kan göra PrintXAmount-metoden rekursiv
         public static void PrintXAmountOfWords(string[] words, int count)
         {
             if (count == 0 || words.Length < 1) return;
@@ -89,17 +94,20 @@ namespace WordSearch
             return;
         }
 
+        //Skriver ut felmeddelande vid felaktig input
         public static void ErrorMessage()
         {
             Console.WriteLine("Fel input, vänligen försök igen.");
             Console.WriteLine();
         }
 
+        //Sorterar orden i ett dokument
         public static string[] SortDocumentWords(string[] document)
         {
             return document.OrderBy(word => word).ToArray();
         }
 
+        //Sorterar en lista av string arrays med dokument
         public static List<string[]> SortDocument(List<string[]> allDocs)
         {
             return allDocs.Select(x => SortDocumentWords(x)).ToList();
