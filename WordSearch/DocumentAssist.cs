@@ -8,6 +8,7 @@ namespace WordSearcherML
 {
     public static class DocumentAssist
     {
+        //Under construction
         public static int GetWordCount(Dictionary<int, string> dictionaryWords, string word)
         {
             int count = -1;
@@ -17,12 +18,16 @@ namespace WordSearcherML
             return count++;
         }
 
+
+        //Under construction
         public static void PrintSavedDataStructure(Dictionary<int, string> dictionaryWords)
         {
             foreach (KeyValuePair<int, string> k in dictionaryWords)
                 Console.WriteLine(k.Value);
         }
 
+
+        //Under construction
         public static List<string> PrintXAmountOfWords(List<string> listOfWords, int x)
         {
             List<string> words = new List<string>();
