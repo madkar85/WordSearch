@@ -16,11 +16,13 @@ namespace WordSearch
                 @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc2.txt",
                 @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc3.txt" };
 
-            string[] docs2 = { @"C:\Users\123\source\repos\WordSearch\WordSearch\Docs\Doc1.txt",
-                               @"C:\Users\123\source\repos\WordSearch\WordSearch\Docs\Doc2.txt",
-                               @"C:\Users\123\source\repos\WordSearch\WordSearch\Docs\Doc3.txt"};
 
-            //läser in alla dokumenten och gör en lista av string arrays
+            string returnString = @"..\..\..\";
+            string[] docs2 = { Path.Combine(Environment.CurrentDirectory, returnString, "Doc1.txt"),
+                               Path.Combine(Environment.CurrentDirectory, returnString, "Doc2.txt"),
+                               Path.Combine(Environment.CurrentDirectory, returnString, "Doc3.txt") };
+
+            //Reads and adds document to list
             var allDocs = new List<string[]>();
 
             for (int i = 0; i <= docs2.Length - 1; i++)
@@ -31,7 +33,11 @@ namespace WordSearch
             Menu(allDocs);
         }
 
-        //Läser in dokumenten och splittar alla string efter specialtecken samt tar bort whitespace
+        /// <summary>
+        /// Reads documents and removes null or whitespace
+        /// </summary>
+        /// <param name="docName"></param>
+        /// <returns></returns>
         public static string[] ReadDocument(string docName)
         {
             var file = File.ReadAllText(docName);
@@ -39,7 +45,10 @@ namespace WordSearch
             return Regex.Split(file, @"[^\w]+").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
         }
 
-        //Menyn som ger användaren valen den kan göra med dokumenten
+        /// <summary>
+        /// Menu
+        /// </summary>
+        /// <param name="allDocs"></param>
         public static void Menu(List<string[]> allDocs)
         {
             bool keepgoing = true;
@@ -55,35 +64,25 @@ namespace WordSearch
                 Console.WriteLine("1. Sök efter antal förekomster av ett ord");
                 Console.WriteLine("2. Skriv ut resultatet av sökning");
                 Console.WriteLine("3. Sortera och skriv ut ord i dokumenten i bokstavsordning");
-                Console.WriteLine("4. Skriv ut ett antal ord ur sorterat dokument");
-                Console.WriteLine("5. Avsluta");
+                Console.WriteLine("4. Avsluta");
 
                 string answer = Console.ReadLine();
 
                 switch (answer)
                 {
                     case "1":
-                        //SearchWord();
                         Console.WriteLine("Vilket ord söker du?");
                         string word = Console.ReadLine();
                         dictionaryOfWords = SearchForWord(allDocs, word);
                         myResult.Add(RankDictionary(dictionaryOfWords, word));
                         break;
                     case "2":
-                        //PrintResult();
                         PrintAllResuults(myResult);
                         break;
                     case "3":
                         PrintWords(allDocs);
                         break;
                     case "4":
-                        PrintXAmountOfWords(allDocs[0], 15);
-                        Console.WriteLine();
-                        PrintXAmountOfWords(allDocs[1], 15);
-                        Console.WriteLine();
-                        PrintXAmountOfWords(allDocs[2], 15);
-                        break;
-                    case "5":
                         keepgoing = false;
                         break;
                     default:
@@ -94,8 +93,9 @@ namespace WordSearch
         }
 
 
-        //Exempel på hur vi kan göra PrintXAmount-metoden rekursiv
-        //Ordo = O(log n) ?
+
+        //A recursive methode that prints out X amount of words
+
         public static void PrintXAmountOfWords(string[] words, int count)
         {
             if (count == 0 || words.Length < 1) return;
@@ -109,25 +109,39 @@ namespace WordSearch
             return;
         }
 
-        //Skriver ut felmeddelande vid felaktig input
+        /// <summary>
+        /// Types out an error message
+        /// </summary>
         public static void ErrorMessage()
         {
             Console.WriteLine("Fel input, vänligen försök igen.");
             Console.WriteLine();
         }
 
-        //Sorterar orden i ett dokument
+        /// <summary>
+        /// Sorts words in document
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         public static string[] SortDocumentWords(string[] document)
         {
             return document.OrderBy(word => word).ToArray();
         }
 
-        //Sorterar en lista av string arrays med dokument
+        /// <summary>
+        /// Sorts list of strings arrays
+        /// </summary>
+        /// <param name="allDocs"></param>
+        /// <returns></returns>
         public static List<string[]> SortDocument(List<string[]> allDocs)
         {
             return allDocs.Select(x => SortDocumentWords(x)).ToList();
         }
 
+        /// <summary>
+        /// Gets input of X amount of words then prints them out
+        /// </summary>
+        /// <param name="allDocs"></param>
         private static void PrintWords(List<string[]> allDocs)
         {
             List<string[]> sortedDocs = new List<string[]>();
@@ -149,7 +163,6 @@ namespace WordSearch
             sortedDocs = SortDocument(allDocs);
 
 
-
             foreach (string[] doc in sortedDocs)
             {
                 Console.WriteLine($"Document {docNumber}\n");
@@ -162,6 +175,12 @@ namespace WordSearch
 
         }
 
+        /// <summary>
+        /// Counts occurring words in documents
+        /// </summary>
+        /// <param name="allDocs"></param>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public static Dictionary<string, int> SearchForWord(List<string[]> allDocs, string word)
         {
             Dictionary<string, int> dictionaryOfWords = new Dictionary<string, int>();
@@ -171,12 +190,19 @@ namespace WordSearch
             foreach (string[] doc in allDocs)
             {
 
-                dictionaryOfWords.Add("doc" + docCount, DocumentAssist.GetWordCount(doc, word));
+                dictionaryOfWords.Add("doc" + docCount, GetWordCount(doc, word));
                 docCount++;
             }
 
             return dictionaryOfWords;
         }
+
+        /// <summary>
+        /// Organizing documents based on a searched word
+        /// </summary>
+        /// <param name="dictionaryOfWords"></param>
+        /// <param name="word"></param>
+        /// <returns></returns>
         private static string RankDictionary(Dictionary<string, int> dictionaryOfWords, string word)
         {
             Dictionary<string, int> myDictionary = dictionaryOfWords;
@@ -194,12 +220,35 @@ namespace WordSearch
             return result;
         }
 
+        /// <summary>
+        /// Prints out all serchresults from a list
+        /// </summary>
+        /// <param name="results"></param>
         private static void PrintAllResuults(List<string> results)
         {
             foreach (string res in results)
             {
                 Console.WriteLine(res);
             }
+        }
+
+        /// <summary>
+        /// Counts a word from an array
+        /// </summary>
+        /// <param name="arrayWords"></param>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static int GetWordCount(string[] arrayWords, string word)
+        {
+            int count = 0;
+            for (int i = 0; i < arrayWords.Length; i++)
+            {
+                if (arrayWords[i] == word)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
     }
