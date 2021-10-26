@@ -81,6 +81,7 @@ namespace WordSearch
         }
 
         //Exempel på hur vi kan göra PrintXAmount-metoden rekursiv
+        //Ordo = O(log n) ?
         public static void PrintXAmountOfWords(string[] words, int count)
         {
             if (count == 0 || words.Length < 1) return;
