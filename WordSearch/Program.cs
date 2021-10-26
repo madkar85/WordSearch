@@ -12,10 +12,11 @@ namespace WordSearch
         static void Main(string[] args)
         {
             //alla sökvägarna till dokumenten i en array, istället för att lägga in dom individuellt
+            /*
             string[] docs = { @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc1.txt",
                 @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc2.txt",
                 @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc3.txt" };
-
+            */
 
             string returnString = @"..\..\..\";
             string[] docs2 = { Path.Combine(Environment.CurrentDirectory, returnString, "Doc1.txt"),
@@ -77,7 +78,7 @@ namespace WordSearch
                         myResult.Add(RankDictionary(dictionaryOfWords, word));
                         break;
                     case "2":
-                        PrintAllResuults(myResult);
+                        PrintAllResults(myResult);
                         break;
                     case "3":
                         PrintWords(allDocs);
@@ -123,6 +124,7 @@ namespace WordSearch
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
+        /// Ordo: O(1)
         public static string[] SortDocumentWords(string[] document)
         {
             return document.OrderBy(word => word).ToArray();
@@ -133,6 +135,7 @@ namespace WordSearch
         /// </summary>
         /// <param name="allDocs"></param>
         /// <returns></returns>
+        /// Ordo: O(1)
         public static List<string[]> SortDocument(List<string[]> allDocs)
         {
             return allDocs.Select(x => SortDocumentWords(x)).ToList();
@@ -209,7 +212,7 @@ namespace WordSearch
 
             string result = "";
 
-            result += $"Det sökta ordet {word} hittades enligt följannde:\n";
+            result += $"Det sökta ordet {word} hittades enligt följande:\n";
             foreach (KeyValuePair<string, int> doc in myDictionary.OrderByDescending(key => key.Value))
             {
                 result += $"{doc.Key}: {doc.Value} gånger.\n";
@@ -224,9 +227,10 @@ namespace WordSearch
         /// Prints out all serchresults from a list
         /// </summary>
         /// <param name="results"></param>
-        private static void PrintAllResuults(List<string> results)
+        /// Ordo: O(n)
+        private static void PrintAllResults(List<string> results)
         {
-            // Ordo: (On) ??
+            
             foreach (string res in results)
             {
                 Console.WriteLine(res);
