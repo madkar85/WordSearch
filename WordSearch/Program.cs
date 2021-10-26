@@ -226,6 +226,7 @@ namespace WordSearch
         /// <param name="results"></param>
         private static void PrintAllResuults(List<string> results)
         {
+            // Ordo: (On) ??
             foreach (string res in results)
             {
                 Console.WriteLine(res);
@@ -240,6 +241,7 @@ namespace WordSearch
         /// <returns></returns>
         public static int GetWordCount(string[] arrayWords, string word)
         {
+            // Ordo: (On) ??
             int count = 0;
             for (int i = 0; i < arrayWords.Length; i++)
             {
