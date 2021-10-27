@@ -115,8 +115,7 @@ namespace WordSearch
         /// </summary>
         public static void ErrorMessage()
         {
-            Console.WriteLine("Fel input, vänligen försök igen.");
-            Console.WriteLine();
+            Console.WriteLine("Fel input, vänligen försök igen.\n");
         }
 
         /// <summary>
