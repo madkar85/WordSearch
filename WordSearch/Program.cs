@@ -243,9 +243,9 @@ namespace WordSearch
         /// <param name="arrayWords"></param>
         /// <param name="word"></param>
         /// <returns></returns>
+        /// Ordo: O(n+1)
         public static int GetWordCount(string[] arrayWords, string word)
         {
-            // Ordo: (On) ??
             int count = 0;
             for (int i = 0; i < arrayWords.Length; i++)
             {
