@@ -11,13 +11,8 @@ namespace WordSearch
     {
         static void Main(string[] args)
         {
-            //alla sökvägarna till dokumenten i en array, istället för att lägga in dom individuellt
-            /*
-            string[] docs = { @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc1.txt",
-                @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc2.txt",
-                @"C:\Users\madel\OneDrive\Skrivbord\Utbildning\Datalogi\Assignments\WordSearch\documents\Doc3.txt" };
-            */
-
+         
+            // String[] of paths to all documents
             string returnString = @"..\..\..\";
             string[] docs2 = { Path.Combine(Environment.CurrentDirectory, returnString, "Doc1.txt"),
                                Path.Combine(Environment.CurrentDirectory, returnString, "Doc2.txt"),
